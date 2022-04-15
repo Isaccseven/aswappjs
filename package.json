@@ -11,12 +11,15 @@
   "dependencies": {
     "@headlessui/react": "^1.5.0",
     "@heroicons/react": "^1.0.6",
+    "chart.js": "^3.7.1",
+    "faker": "^6.6.6",
     "heroicons": "^1.0.6",
     "ionicons": "^6.0.1",
     "moment": "^2.29.2",
     "next": "12.1.5",
     "next-auth": "^4.3.2",
     "react": "18.0.0",
+    "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0"
   },
   "devDependencies": {

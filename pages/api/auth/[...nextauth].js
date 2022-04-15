@@ -12,16 +12,16 @@ export default NextAuth(
                 password: {label: "Password", type: "password"}
             },
             async authorize(credentials) {
-                var myHeaders = new Headers();
+                const myHeaders = new Headers();
                 myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
 
-                var urlencoded = new URLSearchParams();
+                const urlencoded = new URLSearchParams();
                 urlencoded.append("login-form", "login-form");
                 urlencoded.append("login-referer", "");
                 urlencoded.append("password", credentials.password);
                 urlencoded.append("user", credentials.username);
 
-                var requestOptions = {
+                const requestOptions = {
                     method: 'POST',
                     headers: myHeaders,
                     body: urlencoded,

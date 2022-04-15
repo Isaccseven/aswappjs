@@ -4,6 +4,7 @@ import {Disclosure} from '@headlessui/react'
 import {LogoutIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import Notenliste from "./notenliste";
 import Stundenplan from "./stundenplan";
+import Dashboard from "./dashboard";
 
 export default function Wrapper() {
     const {data: session, status} = useSession()
@@ -132,11 +133,11 @@ export default function Wrapper() {
                         {/* Replace with your content */}
                         {(function () {
                             if (menuItem === 0) {
-                                return <span>Hier kommt mal ein Dashboard hin</span>
+                                return <Dashboard/>
                             } else if (menuItem === 1) {
-                                return <Notenliste></Notenliste>
+                                return <Notenliste/>
                             } else if (menuItem === 2) {
-                                return <Stundenplan></Stundenplan>
+                                return <Stundenplan/>
                             } else {
                                 return <span>Neither</span>
                             }
