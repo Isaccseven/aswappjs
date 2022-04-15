@@ -35,7 +35,7 @@ export default NextAuth(
 
                 const result = await fetch("https://asw-dualesstudium.academyfive.net/community/login", requestOptions)
 
-                if(result){
+                if(result.ok){
                     return userData
                 } else {
                     return null;
