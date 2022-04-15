@@ -3,10 +3,10 @@ import {useSession} from "next-auth/react";
 
 
 const Notenliste = (props) => {
-    const { data: session } = useSession()
+    const {data: session} = useSession()
     const [apiData, setApiData] = useState([]);
 
-    async function getApiData(){
+    async function getApiData() {
         let body = JSON.stringify({
             username: session.username,
             password: session.password
@@ -20,7 +20,7 @@ const Notenliste = (props) => {
                 body
             });
             const data = await res.json();
-            console.log("notenliste",data)
+            console.log("notenliste", data)
             return data
         } catch (err) {
             console.log(err);
@@ -35,37 +35,87 @@ const Notenliste = (props) => {
     }, [])
 
 
-
-
     return (
-        <table className="border-collapse border border-slate-500">
-            <thead>
-            <tr>
-                <th className="border border-slate-600">Lehrveranstaltung</th>
-                <th className="border border-slate-600">Status</th>
-                <th className="border border-slate-600">Note</th>
-                <th className="border border-slate-600">Bewertung</th>
-                <th className="border border-slate-600">Ects</th>
-                <th className="border border-slate-600">Credits</th>
-                <th className="border border-slate-600">Versuch</th>
-            </tr>
-            </thead>
-            {apiData.map((key) => {
-                return (
-                    <tbody key={key.key}>
-                    <tr key={key}>
-                        <td className="border border-slate-700 text-center">{key.lehrveranstaltung}</td>
-                        <td className="border border-slate-700 text-center">{key.status}</td>
-                        <td className="border border-slate-700 text-center">{key.note}</td>
-                        <td className="border border-slate-700 text-center">{key.bewertung}</td>
-                        <td className="border border-slate-700 text-center">{key.ects}</td>
-                        <td className="border border-slate-700 text-center">{key.credits}</td>
-                        <td className="border border-slate-700 text-center">{key.versuch}</td>
-                    </tr>
-                    </tbody>
-                )
-            })}
-        </table>
+        <div className="flex flex-col">
+            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="overflow-hidden">
+                        <table className="min-w-full">
+                            <thead className="border-b">
+                            <tr>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    #
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Lehrveranstaltung
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Status
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Note
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Bewertung
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Ects
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Credits
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Versuch
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {apiData.map((key, index) => {
+                                return (
+                                    <tr className="bg-white border-b" key={key}>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {index}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.lehrveranstaltung}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.status}
+                                        </td>
+
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.note}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.bewertung}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.ects}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.credits}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.versuch}
+                                        </td>
+
+                                    </tr>
+                                )
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 
 }

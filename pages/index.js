@@ -18,5 +18,5 @@ export default function Home() {
             router.push("/api/auth/signin")
         );
     }
-    return <>test</>
+    return <></>
 }

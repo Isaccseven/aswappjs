@@ -1,88 +1,151 @@
 import React, {useState} from 'react';
-import NavigationListItem from "./navigationlistitem";
-import Image from 'next/image'
 import {signOut, useSession} from "next-auth/react";
+import {Disclosure} from '@headlessui/react'
+import {LogoutIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import Notenliste from "./notenliste";
 import Stundenplan from "./stundenplan";
-import aswlogo from "../public/asw_toplogo.png";
 
 export default function Wrapper() {
     const {data: session, status} = useSession()
     const [menuItem, setMenuItem] = useState(0);
 
+    const user = {
+        name: 'Tom Cook',
+        email: 'tom@example.com',
+        imageUrl:
+            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
+    }
+    const navigation = [
+        {name: 'Dashboard', menuItem: 0},
+        {name: 'Noten', menuItem: 1},
+        {name: 'Stundenplan', menuItem: 2}
+    ]
+    const userNavigation = [
+        {name: 'Your Profile', href: '#'},
+        {name: 'Settings', href: '#'},
+        {name: 'Sign out', href: '#'},
+    ]
+
+    function classNames(...classes) {
+        return classes.filter(Boolean).join(' ')
+    }
+
     return (
-        <div className="flex flex-wrap bg-gray-100 w-full h-full">
-            <div className="w-3/12 bg-white rounded p-3 shadow-lg">
-                <div className="flex items-center space-x-4 p-2 mb-5">
-                    <Image className="h-12 rounded-full"
-                           src={aswlogo}
-                           alt={session.username}
-                           width={300}
-                           height={150}
-                    />
-                    <div>
-                        <h4 className="font-semibold text-lg text-gray-700 capitalize font-poppins tracking-wide">
-                            {session.username}
-                        </h4>
-                        <button className="bg-gray-500 p-1 text-white rounded" onClick={() => signOut()}>Log Out
-                        </button>
-                        <span className="text-sm tracking-wide flex items-center space-x-1">
-                </span>
+        <>
+            <div className="min-h-full">
+                <Disclosure as="nav" className="bg-gray-800">
+                    {({open}) => (
+                        <>
+                            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                                <div className="flex items-center justify-between h-16">
+                                    <div className="flex items-center">
+                                        <div className="flex-shrink-0">
+                                            <img
+                                                className="h-8 w-8"
+                                                src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                                                alt="Workflow"
+                                            />
+                                        </div>
+                                        <div className="hidden md:block">
+                                            <div className="ml-10 flex items-baseline space-x-4">
+                                                {navigation.map((item) => (
+                                                    <button
+                                                        onClick={
+                                                            function () {
+                                                                return setMenuItem(item.menuItem);
+                                                            }}
+                                                        key={item.name}
+                                                        className='text-gray-300 hover:bg-gray-700 hover:text-white
+                                                            px-3 py-2 rounded-md text-sm font-medium'
+                                                        aria-current='page'
+                                                    >
+                                                        {item.name}
+                                                    </button>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div className="hidden md:block">
+                                        <div className="ml-4 flex items-center md:ml-6">
+                                            <button
+                                                onClick={() => signOut()}
+                                                type="button"
+                                                className="bg-gray-800 p-1 rounded-full text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                                            >
+                                                <span className="sr-only">Logout</span>
+                                                <LogoutIcon className="h-6 w-6" aria-hidden="true"/>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div className="-mr-2 flex md:hidden">
+                                        {/* Mobile menu button */}
+                                        <Disclosure.Button
+                                            className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                            <span className="sr-only">Open main menu</span>
+                                            {open ? (
+                                                <XIcon className="block h-6 w-6" aria-hidden="true"/>
+                                            ) : (
+                                                <MenuIcon className="block h-6 w-6" aria-hidden="true"/>
+                                            )}
+                                        </Disclosure.Button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <Disclosure.Panel className="md:hidden">
+                                <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                                    {navigation.map((item) => (
+                                        <Disclosure.Button
+                                            key={item.name}
+                                            className='text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium'
+                                            aria-current='page'
+                                        >
+                                            <button
+                                                onClick={() => setMenuItem(item.menuItem)}>
+                                                {item.name}
+                                            </button>
+                                        </Disclosure.Button>
+                                    ))}
+                                    <button
+                                        onClick={() => signOut()}
+                                        type="button"
+                                        className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                    >
+                                        <span className="sr-only">Logout</span>
+                                        <LogoutIcon className="h-6 w-6" aria-hidden="true"/>
+                                    </button>
+                                </div>
+                            </Disclosure.Panel>
+                        </>
+                    )}
+                </Disclosure>
+
+                <header className="bg-white shadow">
+                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                        <h1 className="text-3xl font-bold text-gray-900">
+                            {navigation.at(menuItem).name}
+                        </h1>
                     </div>
-                </div>
-
-
-                <ul className="space-y-2 text-sm mb-2">
-                    <button onClick={() => setMenuItem(0)}>
-                        <NavigationListItem itemname="Dashboard"/>
-                    </button>
-                </ul>
-
-                <ul className="space-y-2 text-sm mb-2">
-                    <button onClick={() => setMenuItem(1)}>
-                        <NavigationListItem itemname="Notenliste"/>
-                    </button>
-                </ul>
-
-                <ul className="space-y-2 text-sm mb-2">
-                    <button onClick={() => setMenuItem(2)}>
-                        <NavigationListItem itemname="Stundenplan"/>
-                    </button>
-                </ul>
-
+                </header>
+                <main>
+                    <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+                        {/* Replace with your content */}
+                        {(function () {
+                            if (menuItem === 0) {
+                                return <span>Hier kommt mal ein Dashboard hin</span>
+                            } else if (menuItem === 1) {
+                                return <Notenliste></Notenliste>
+                            } else if (menuItem === 2) {
+                                return <Stundenplan></Stundenplan>
+                            } else {
+                                return <span>Neither</span>
+                            }
+                        })()}
+                        {/* /End replace */}
+                    </div>
+                </main>
             </div>
-
-            <div className="w-9/12">
-                <div className="p-7">
-                    {(function () {
-                        if (menuItem === 0) {
-                            return <span>Empty</span>
-                        } else if (menuItem === 1) {
-                            return <Notenliste></Notenliste>
-                        } else if (menuItem === 2) {
-                            return <Stundenplan></Stundenplan>
-                        } else {
-                            return <span>Neither</span>
-                        }
-                    })()}
-                </div>
-            </div>
-        </div>
-    );
-
+        </>
+    )
 }
 
-{/*
-{(function () {
-                        if (menuItem === 0) {
-                            return <span>rwar</span>
-                        } else if (menuItem === 1) {
-                            return <Notenliste></Notenliste>
-                        } else if (menuItem === 2) {
-                            return <Stundenplan></Stundenplan>
-                        } else {
-                            return <span>Neither</span>
-                        }
-                    })()}
-*/
-}

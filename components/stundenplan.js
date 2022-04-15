@@ -2,11 +2,11 @@ import moment from 'moment';
 import 'moment/locale/de';
 import React, {useEffect, useState} from 'react';
 
-const Stundenplan= () => {
+const Stundenplan = () => {
 
     const [apiData, setApiData] = useState([]);
 
-    async function getApiData(){
+    async function getApiData() {
         const res = await fetch(`https://getcalendarapidata.herokuapp.com/getCalendarData`, {
             method: 'GET',
         });
@@ -23,40 +23,78 @@ const Stundenplan= () => {
     }, [])
 
 
-
     return (
-        <table className="border border-slate-500 p-2">
-            <thead>
-            <tr>
-                <th className="border border-slate-600 text-center">Fach</th>
-                <th className="border border-slate-600 text-center">Von</th>
-                <th className="border border-slate-600 text-center">Bis</th>
-                <th className="border border-slate-600 text-center">Datum</th>
-                <th className="border border-slate-600 text-center">Raum</th>
-                <th className="border border-slate-600 text-center">Typ</th>
-            </tr>
-            </thead>
-            {apiData.map((key) => {
-                return (
-                    <tbody key={key.key}>
-                    <tr>
-                        <td className="border border-slate-700 text-center p-3">{key.fach}</td>
-                        <td className="border border-slate-700 text-center p-3">{
-                            moment(key.from).format('LT')
-                        }</td>
-                        <td className="border border-slate-700 text-center p-3">{
-                            moment(key.to).format('LT')
-                        }</td>
-                        <td className="border border-slate-700 text-center p-3">{
-                            moment(key.date).format('LL')
-                        }</td>
-                        <td className="border border-slate-700 text-center p-3">{key.raum}</td>
-                        <td className="border border-slate-700 text-center p-3">{key.type}</td>
-                    </tr>
-                    </tbody>
-                )
-            })}
-        </table>
+        <div className="flex flex-col">
+            <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+                <div className="py-2 inline-block min-w-full sm:px-6 lg:px-8">
+                    <div className="overflow-hidden">
+                        <table className="min-w-full">
+                            <thead className="border-b">
+                            <tr>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    #
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Fach
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Von
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Bis
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Datum
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Raum
+                                </th>
+                                <th scope="col" className="text-sm font-medium text-gray-900 px-6 py-4 text-left">
+                                    Typ
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {apiData.map((key, index) => {
+                                return (
+                                    <tr className="bg-white border-b" key={key}>
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {index}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.fach}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {moment(key.from).format('LT')}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {moment(key.to).format('LT')}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {moment(key.date).format('LL')}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.raum}
+                                        </td>
+
+                                        <td className="text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap">
+                                            {key.type}
+                                        </td>
+
+                                    </tr>
+                                )
+                            })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     );
 
 }
