@@ -10,9 +10,10 @@ import {
     Tooltip
 } from "chart.js";
 
-import { Line } from 'react-chartjs-2';
+import {Line} from 'react-chartjs-2';
 import {useEffect, useState} from "react";
 import {useSession} from "next-auth/react";
+import {number} from "tailwindcss/lib/util/dataTypes";
 
 ChartJS.register(
     CategoryScale,
@@ -28,6 +29,7 @@ ChartJS.register(
 export default function Dashboard(props) {
     const {data: session} = useSession()
     const [apiData, setApiData] = useState([]);
+    const [bachelorNote,setBachelorNote] = useState(0);
 
     async function getApiData() {
         let body = JSON.stringify({
@@ -47,6 +49,21 @@ export default function Dashboard(props) {
         } catch (err) {
             console.log(err);
         }
+    }
+
+    function calculateBachelorGrade(){
+        let gesamtValue = 0;
+        let bachelorValue = 0;
+        apiData.map(item=>{
+                if(item.note !== "Bestanden"){
+                    let rawNote = parseFloat(item.note.replace(/,/g, '.')) || 0
+                    let rawString = parseInt(item.credits.slice(0,1)) || 0
+                    bachelorValue += rawNote * rawString
+                    gesamtValue += rawString
+                }
+        })
+        let durchschnittsnote = bachelorValue/gesamtValue
+        setBachelorNote(durchschnittsnote.toFixed(5))
     }
 
 
@@ -92,11 +109,15 @@ export default function Dashboard(props) {
     };
 
     return (
-        <div className="shadow-lg rounded-lg overflow-hidden">
-            <Line
-                options={options}
-                data={chartData}
-                type={"bar"}/>
-        </div>
+            <div className="shadow-lg rounded-lg flex flex-col items-center overflow-hidden my-2">
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-2xl"
+                        onClick={()=>calculateBachelorGrade()}
+                >Durchschnittsnote berechnen</button>
+                <div className="p-5 bg-gray-500 text-white rounded-2xl my-4">Durchschnittsnote: {bachelorNote}</div>
+                <Line
+                    options={options}
+                    data={chartData}
+                    type={"bar"}/>
+            </div>
     );
 }

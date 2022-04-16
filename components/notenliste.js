@@ -20,7 +20,6 @@ const Notenliste = (props) => {
                 body
             });
             const data = await res.json();
-            console.log("notenliste", data)
             return data
         } catch (err) {
             console.log(err);
