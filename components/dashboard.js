@@ -54,12 +54,14 @@ export default function Dashboard(props) {
     function calculateBachelorGrade(){
         let gesamtValue = 0;
         let bachelorValue = 0;
+        console.log(apiData)
         apiData.map(item=>{
-                if(item.note !== "Bestanden"){
-                    let rawNote = parseFloat(item.note.replace(/,/g, '.')) || 0
-                    let rawString = parseInt(item.credits.slice(0,1)) || 0
+                if(item.note !== "Bestanden" && item.credits.length > 0 ){
+                    let rawNote = parseFloat(item.note.replace(/,/g, '.'))
+                    let rawString = parseInt(item.credits.slice(0,1))
                     bachelorValue += rawNote * rawString
-                    gesamtValue += rawString
+                    let gesamtValueRaw = item.credits.split('/')
+                    gesamtValue += parseInt(gesamtValueRaw[1])
                 }
         })
         let durchschnittsnote = bachelorValue/gesamtValue
