@@ -15,9 +15,12 @@
     "faker": "^6.6.6",
     "heroicons": "^1.0.6",
     "ionicons": "^6.0.1",
+    "memory-cache": "^0.2.0",
     "moment": "^2.29.2",
     "next": "12.1.5",
     "next-auth": "^4.3.2",
+    "nextjs-progressbar": "^0.0.14",
+    "nprogress": "^0.2.0",
     "react": "18.0.0",
     "react-chartjs-2": "^4.1.0",
     "react-dom": "18.0.0"

@@ -1,35 +1,19 @@
 import React, {useState} from 'react';
-import {signOut, useSession} from "next-auth/react";
+import {signOut} from "next-auth/react";
 import {Disclosure} from '@headlessui/react'
 import {LogoutIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
-import Notenliste from "./notenliste";
-import Stundenplan from "./stundenplan";
-import Dashboard from "./dashboard";
+import Notenliste from "./notenliste/notenliste";
+import Stundenplan from "./stundenplan/stundenplan";
+import Dashboard from "./dashboard/dashboard";
 
 export default function Wrapper() {
-    const {data: session, status} = useSession()
     const [menuItem, setMenuItem] = useState(0);
 
-    const user = {
-        name: 'Tom Cook',
-        email: 'tom@example.com',
-        imageUrl:
-            'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-    }
     const navigation = [
         {name: 'Dashboard', menuItem: 0},
         {name: 'Noten', menuItem: 1},
         {name: 'Stundenplan', menuItem: 2}
     ]
-    const userNavigation = [
-        {name: 'Your Profile', href: '#'},
-        {name: 'Settings', href: '#'},
-        {name: 'Sign out', href: '#'},
-    ]
-
-    function classNames(...classes) {
-        return classes.filter(Boolean).join(' ')
-    }
 
     return (
         <>

@@ -1,14 +1,15 @@
 import '../styles/globals.css'
-import React, {useEffect} from "react";
-import {SessionProvider, useSession} from "next-auth/react";
-import {useRouter} from "next/router";
+import React from "react";
+import {SessionProvider} from "next-auth/react";
 
 function MyApp({Component, pageProps}) {
 
     return (
-        <SessionProvider session={pageProps.session}>
-                    <Component {...pageProps} />
-        </SessionProvider>
+        <>
+            <SessionProvider session={pageProps.session}>
+                <Component {...pageProps} />
+            </SessionProvider>
+        </>
     );
 }
 
