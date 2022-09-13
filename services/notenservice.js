@@ -16,9 +16,6 @@ export async function getNotenApiData(session) {
       const res = await fetch(url, {
         method: "POST",
         headers: {
-          "Access-Control-Allow-Methods":
-            "GET, PUT, POST, DELETE, HEAD, OPTIONS",
-          "Access-Control-Allow-Origin": "*",
           Authorization: "Basic dXNlcjphcGlfa2V5",
           "Content-Type": "application/json",
         },
