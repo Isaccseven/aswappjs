@@ -1,8 +1,7 @@
 import cacheData from "memory-cache";
 
 export async function getNotenApiData(session) {
-  const url = "https://web-production-8ebd.up.railway.app/api/v1/grades";
-  //const url = "http://localhost:8010/proxy/api/v1/grades";
+  const url = "https://web-development-c65f.up.railway.app/api/v1/grades";
   const value = cacheData.get(url);
   if (value) {
     return value;

@@ -12,33 +12,35 @@ export default NextAuth(
                 password: {label: "Password", type: "password"}
             },
             async authorize(credentials) {
-                const myHeaders = new Headers();
-                myHeaders.append("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+                var myHeaders = new Headers();
+                myHeaders.append("Authorization", "Basic dXNlcjphcGlfa2V5");
+                myHeaders.append("Content-Type", "application/json");
 
-                const urlencoded = new URLSearchParams();
-                urlencoded.append("login-form", "login-form");
-                urlencoded.append("login-referer", "");
-                urlencoded.append("password", credentials.password);
-                urlencoded.append("user", credentials.username);
 
-                const requestOptions = {
+                var raw = JSON.stringify({
+                    "username": credentials.username,
+                    "password": credentials.password
+                });
+
+                var requestOptions = {
                     method: 'POST',
                     headers: myHeaders,
-                    body: urlencoded,
+                    body: raw,
                     redirect: 'follow'
                 };
+
 
                 const userData = {
                     username: credentials.username,
                     password: credentials.password
                 }
 
-                const result = await fetch("https://asw-dualesstudium.academyfive.net/community/login", requestOptions)
+                const result = await fetch("https://web-development-c65f.up.railway.app/api/v1/grades", requestOptions)
 
                 if(result.ok){
                     return userData
                 } else {
-                    return null;
+                    return result.error();
                 }
             }
         })

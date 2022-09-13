@@ -1,4 +1,4 @@
-import {signIn, signOut, useSession} from "next-auth/react";
+import {useSession} from "next-auth/react";
 import Wrapper from "../components/wrapper";
 import {useRouter} from "next/router";
 
@@ -6,17 +6,24 @@ import {useRouter} from "next/router";
 export default function Home() {
     const {data: session, status} = useSession()
     const router = useRouter()
-
-    if (status === "authenticated") {
-        return (
-            <Wrapper/>
-        );
+    try {
+        if (status === "authenticated") {
+            return (
+                <Wrapper/>
+            );
+        }
+    } catch (e) {
+        console.log(e)
     }
 
-    if (status === "unauthenticated") {
-        return (
-            router.push("/api/auth/signin")
-        );
+    try {
+        if (status === "unauthenticated") {
+            return (
+                router.push("/api/auth/signin")
+            );
+        }
+    } catch (e) {
+        console.log(e)
     }
     return <></>
 }
